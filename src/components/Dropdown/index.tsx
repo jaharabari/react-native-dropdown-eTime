@@ -62,6 +62,7 @@ const DropdownComponent = React.forwardRef<any, DropdownProps>(
       searchPlaceholder,
       placeholder,
       search = false,
+      showId = false,
       maxHeight = 340,
       disable = false,
       keyboardAvoiding = true,
@@ -312,7 +313,8 @@ const DropdownComponent = React.forwardRef<any, DropdownProps>(
               {...selectedTextProps}
             >
               {isSelected !== null
-                ? _.get(currentValue, labelField)
+                
+                ? (showId ? `${_.get(currentValue, valueField)} - ${_.get(currentValue, labelField)}`  : _.get(currentValue, labelField))
                 : placeholder}
             </Text>
             {renderRightIcon ? (
@@ -346,10 +348,14 @@ const DropdownComponent = React.forwardRef<any, DropdownProps>(
             {renderItem ? (
               renderItem(item, selected)
             ) : (
-              <View style={styles.item}>
-                <Text style={[styles.textItem, font()]}>
-                  {_.get(item, labelField)}
-                </Text>
+                <View style={styles.item}>
+                  {props.showId ?  <Text style={[styles.textItem, font()]}>
+                  {_.get(item, valueField)} - {_.get(item, labelField)}
+                  </Text> :
+                     <Text style={[styles.textItem, font()]}>
+                     {_.get(item, labelField)}
+                   </Text>
+                }
               </View>
             )}
           </TouchableOpacity>
@@ -402,6 +408,7 @@ const DropdownComponent = React.forwardRef<any, DropdownProps>(
       onSearch,
       renderInputSearch,
       search,
+      showId,
       searchPlaceholder,
       testID,
     ]);

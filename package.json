@@ -1,6 +1,6 @@
 {
-  "name": "react-native-element-dropdown",
-  "version": "2.0.0",
+  "name": "react-native-dropdown-etime",
+  "version": "1.0.2",
   "description": "A React Native dropdown component easy to customize for both iOS and Android.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -13,7 +13,7 @@
     "android",
     "ios",
     "cpp",
-    "react-native-element-dropdown.podspec",
+    "react-native-dropdown-eTime.podspec",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",
@@ -44,13 +44,13 @@
     "select",
     "select country"
   ],
-  "repository": "https://github.com/hoaphantn7604/react-native-element-dropdown",
-  "author": "Hoa Phan <hoaphantn7604@gmail.com> (https://github.com/hoaphantn7604)",
+  "repository": "https://github.com/jaharabari/react-native-dropdown-eTime",
+  "author": "Jaha Rabari <jaha_rabari@ymail.com> (https://github.com/jaharabari)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hoaphantn7604/react-native-element-dropdown/issues"
+    "url": "https://github.com/jaharabari/react-native-dropdown-eTime/issues"
   },
-  "homepage": "https://github.com/hoaphantn7604/react-native-element-dropdown#readme",
+  "homepage": "https://github.com/jaharabari/react-native-dropdown-eTime#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -153,5 +153,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^13.0.0"
   }
 }

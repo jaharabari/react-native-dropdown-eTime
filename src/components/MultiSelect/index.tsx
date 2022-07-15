@@ -26,6 +26,7 @@ import { useDetectDevice } from '../../toolkits';
 import { styles } from './styles';
 import type { MultiSelectProps } from './model';
 import _ from 'lodash';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { isTablet, isIOS } = useDetectDevice;
 const ic_down = require('../../assets/down.png');
@@ -76,7 +77,7 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
       showsVerticalScrollIndicator = true,
       dropdownPosition = 'auto',
       flatListProps,
-      alwaysRenderItemSelected = false,
+      // alwaysRenderItemSelected = false,
       searchQuery,
       statusBarIsTranslucent,
       backgroundColor,
@@ -258,29 +259,46 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
       [data, labelField, searchQuery]
     );
 
-    const onSelect = useCallback(
-      (item: any) => {
-        onSearch('');
-
-        const index = currentValue.findIndex(
-          (e) => e === _.get(item, valueField)
-        );
-        if (index > -1) {
-          currentValue.splice(index, 1);
+    const onSelect = (item: any) => {
+      onSearch('');
+  
+      const index = currentValue.findIndex(e => e === _.get(item, valueField));
+      if (index > -1) {
+        if (item[labelField] === "Select All") {
+          currentValue.splice(0, currentValue.length);
         } else {
-          if (maxSelect) {
-            if (currentValue.length < maxSelect) {
-              currentValue.push(_.get(item, valueField));
+          currentValue.splice(index, 1);
+          const indexAll = currentValue.findIndex(e => e === 0);
+          if (indexAll > -1) {
+            currentValue.splice(indexAll, 1);
+          }
+         
+        }
+      } else {
+        if (maxSelect) {
+          if (currentValue.length < maxSelect) {
+            if (item[labelField] === "Select All") { 
+              console.log(data.map(e => e[valueField]));
+              currentValue.splice(0, currentValue.length);
+             data.map(e => currentValue.push(e[valueField]));
+            } else {
+              currentValue.push(item[valueField]);
             }
+          }
+        } else {
+          if (item[labelField] === "Select All") { 
+            console.log(data.map(e => e[valueField]));
+            currentValue.splice(0, currentValue.length);
+           data.map(e => currentValue.push(e[valueField]));
           } else {
-            currentValue.push(_.get(item, valueField));
+            currentValue.push(item[valueField]);
           }
         }
-        onChange(currentValue);
-        setKey(Math.random());
-      },
-      [currentValue, maxSelect, onChange, onSearch, valueField]
-    );
+  
+      }
+      onChange(currentValue);
+      setKey(Math.random());
+    };
 
     const _renderDropdown = () => {
       return (
@@ -323,7 +341,6 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
             onPress={() => onSelect(item)}
             style={[
               selected && {
-                backgroundColor: activeColor,
                 ...styles.wrapItem,
               },
             ]}
@@ -332,9 +349,13 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
               renderItem(item, selected)
             ) : (
               <View style={styles.item}>
-                <Text style={[styles.textItem, placeholderStyle, font()]}>
-                  {_.get(item, labelField)}
-                </Text>
+               <MaterialCommunityIcons
+            name={checkSelected(item) ? "checkbox-marked" : "checkbox-blank-outline"}
+            style={[styles.checkIcon]}
+          ></MaterialCommunityIcons> 
+          {index === 0 ? <Text style={[styles.textItem, placeholderStyle, font()]}>{_.get(item, labelField)}</Text> :
+            <Text style={[styles.textItem, placeholderStyle, font()]}>{_.get(item, valueField)} - {_.get(item, labelField)}</Text>}
+
               </View>
             )}
           </TouchableOpacity>
@@ -667,7 +688,7 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
           {_renderDropdown()}
           {_renderModal()}
         </View>
-        {(!visible || alwaysRenderItemSelected) && _renderItemSelected(false)}
+        {/* {(!visible || alwaysRenderItemSelected) && _renderItemSelected(false)} */}
       </>
     );
   }

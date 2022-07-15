@@ -31,6 +31,7 @@ export type DropdownProps = {
   labelField: string;
   valueField: string;
   search?: boolean;
+  showId?: boolean;
   searchPlaceholder?: string;
   disable?: boolean;
   autoScroll?: boolean;

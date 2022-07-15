@@ -60,6 +60,11 @@ export const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
+  checkIcon: {
+    color: "#1C67F6",
+    fontSize: 28,
+    lineHeight: 28
+  },
   textError: {
     color: 'red',
     fontSize: 14,
