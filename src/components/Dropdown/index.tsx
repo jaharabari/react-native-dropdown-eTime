@@ -314,7 +314,7 @@ const DropdownComponent = React.forwardRef<any, DropdownProps>(
             >
               {isSelected !== null
                 
-                ? (showId ? `${_.get(currentValue, valueField)} - ${_.get(currentValue, labelField)}`  : _.get(currentValue, labelField))
+                ? (showId ? _.get(currentValue, valueField) === 0 ? _.get(currentValue, labelField) : `${_.get(currentValue, valueField)} - ${_.get(currentValue, labelField)}`  : _.get(currentValue, labelField))
                 : placeholder}
             </Text>
             {renderRightIcon ? (
@@ -349,8 +349,8 @@ const DropdownComponent = React.forwardRef<any, DropdownProps>(
               renderItem(item, selected)
             ) : (
                 <View style={styles.item}>
-                  {props.showId ?  <Text style={[styles.textItem, font()]}>
-                  {_.get(item, valueField)} - {_.get(item, labelField)}
+                  {(props.showId && _.get(item, valueField)> 0) ?  <Text style={[styles.textItem, font()]}>
+                    {_.get(item, valueField)} - {_.get(item, labelField)}
                   </Text> :
                      <Text style={[styles.textItem, font()]}>
                      {_.get(item, labelField)}
