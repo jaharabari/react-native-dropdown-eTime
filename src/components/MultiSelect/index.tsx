@@ -26,10 +26,11 @@ import { useDetectDevice } from '../../toolkits';
 import { styles } from './styles';
 import type { MultiSelectProps } from './model';
 import _ from 'lodash';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { isTablet, isIOS } = useDetectDevice;
 const ic_down = require('../../assets/down.png');
+const ic_checked = require('../../assets/checked.png');
+const ic_uncheck = require('../../assets/uncheck.png');
 
 const defaultProps = {
   placeholder: 'Select item',
@@ -261,7 +262,7 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
 
     const onSelect = (item: any) => {
       onSearch('');
-  
+
       const index = currentValue.findIndex(e => e === _.get(item, valueField));
       if (index > -1) {
         if (item[labelField] === "Select All") {
@@ -272,31 +273,30 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
           if (indexAll > -1) {
             currentValue.splice(indexAll, 1);
           }
-         
+
         }
       } else {
         if (maxSelect) {
           if (currentValue.length < maxSelect) {
-            if (item[labelField] === "Select All") { 
+            if (item[labelField] === "Select All") {
               console.log(data.map(e => e[valueField]));
               currentValue.splice(0, currentValue.length);
-             data.map(e => currentValue.push(e[valueField]));
+              data.map(e => currentValue.push(e[valueField]));
             } else {
               currentValue.push(item[valueField]);
             }
           }
         } else {
-          if (item[labelField] === "Select All") { 
+          if (item[labelField] === "Select All") {
             console.log(data.map(e => e[valueField]));
             currentValue.splice(0, currentValue.length);
-           data.map(e => currentValue.push(e[valueField]));
+            data.map(e => currentValue.push(e[valueField]));
           } else {
             currentValue.push(item[valueField]);
           }
         }
-  
+
       }
-      onChange(currentValue);
       setKey(Math.random());
     };
 
@@ -349,12 +349,9 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
               renderItem(item, selected)
             ) : (
               <View style={styles.item}>
-               <MaterialCommunityIcons
-            name={checkSelected(item) ? "checkbox-marked" : "checkbox-blank-outline"}
-            style={[styles.checkIcon]}
-          ></MaterialCommunityIcons> 
-          {index === 0 ? <Text style={[styles.textItem, placeholderStyle, font()]}>{_.get(item, labelField)}</Text> :
-            <Text style={[styles.textItem, placeholderStyle, font()]}>{_.get(item, valueField)} - {_.get(item, labelField)}</Text>}
+                <Image source={checkSelected(item) ? ic_checked : ic_uncheck} />
+                {index === 0 ? <Text style={[styles.textItem, placeholderStyle, font()]}>{_.get(item, labelField)}</Text> :
+                  <Text style={[styles.textItem, placeholderStyle, font()]}>{_.get(item, valueField)} - {_.get(item, labelField)}</Text>}
 
               </View>
             )}
@@ -424,9 +421,35 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
               inverted
               renderItem={_renderItem}
               keyExtractor={(_item, index) => index.toString()}
-              showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+              showsVerticalScrollIndicator={true}
+              persistentScrollbar={true}
             />
             {renderSearch()}
+            <View style={{ height: 1, backgroundColor: "#DADADA", marginHorizontal: 8 }} />
+            <View style={{ backgroundColor: "#fff", flexDirection: "row", padding: 10, }}>
+              <TouchableOpacity
+                onPress={() => {
+                  currentValue.splice(0, currentValue.length);
+                  onChange(currentValue);
+                }}
+                style={{ flex: 1, borderRadius: 8, alignItems: "center", borderColor: "#DADADA", borderWidth: 1 }}>
+                <Text style={[{ color: "#8A8DA0", fontWeight: "600", fontSize: 16, alignSelf: "center", padding: 10 }, font()]}>
+                  Reset
+                </Text>
+              </TouchableOpacity>
+              <View style={{ width: 16 }} />
+              <TouchableOpacity
+                onPress={() => {
+                  onChange(currentValue);
+                  eventClose();
+
+                }}
+                style={{ backgroundColor: "#1C67F6", flex: 1, borderRadius: 8, alignItems: "center" }}>
+                <Text style={[{ color: "#fff", fontWeight: "600", fontSize: 16, alignSelf: "center", padding: 10 }, font()]}>
+                  Apply Filter
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </TouchableWithoutFeedback>
       );
@@ -443,6 +466,7 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
       return (
         <TouchableWithoutFeedback>
           <View style={styles.flexShrink}>
+
             {renderSearch()}
             <FlatList
               testID={testID + ' flatlist'}
@@ -451,8 +475,36 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
               data={listData}
               renderItem={_renderItem}
               keyExtractor={(_item, index) => index.toString()}
-              showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+              showsVerticalScrollIndicator={true}
+              persistentScrollbar={true}
             />
+            <View>
+              <View style={{ height: 1, backgroundColor: "#DADADA", marginHorizontal: 8 }} />
+              <View style={{ backgroundColor: "#fff", flexDirection: "row", padding: 10, }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    currentValue.splice(0, currentValue.length);
+                    onChange(currentValue);
+                  }}
+                  style={{ flex: 1, borderRadius: 8, alignItems: "center", borderColor: "#DADADA", borderWidth: 1 }}>
+                  <Text style={[{ color: "#8A8DA0", fontWeight: "600", fontSize: 16, alignSelf: "center", padding: 10 }, font()]}>
+                    Reset
+                  </Text>
+                </TouchableOpacity>
+                <View style={{ width: 16 }} />
+                <TouchableOpacity
+                  onPress={() => {
+                    onChange(currentValue);
+                    eventClose();
+
+                  }}
+                  style={{ backgroundColor: "#1C67F6", flex: 1, borderRadius: 8, alignItems: "center" }}>
+                  <Text style={[{ color: "#fff", fontWeight: "600", fontSize: 16, alignSelf: "center", padding: 10 }, font()]}>
+                    Apply Filter
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
         </TouchableWithoutFeedback>
       );
@@ -474,8 +526,8 @@ const MultiSelectComponent = React.forwardRef<any, MultiSelectProps>(
             dropdownPosition === 'auto'
               ? bottom < (isIOS ? 200 : search ? 310 : 300)
               : dropdownPosition === 'top'
-              ? true
-              : false;
+                ? true
+                : false;
           let topHeight = isTopPosition ? top - height : top;
 
           let keyboardStyle: ViewStyle = {};

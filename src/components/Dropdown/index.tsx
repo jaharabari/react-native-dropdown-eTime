@@ -428,6 +428,7 @@ const DropdownComponent = React.forwardRef<any, DropdownProps>(
               renderItem={_renderItem}
               keyExtractor={(_item, index) => index.toString()}
               showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+              persistentScrollbar={true}
             />
             {renderSearch()}
           </View>
@@ -458,6 +459,7 @@ const DropdownComponent = React.forwardRef<any, DropdownProps>(
               renderItem={_renderItem}
               keyExtractor={(_item, index) => index.toString()}
               showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+              persistentScrollbar={true}
             />
           </View>
         </TouchableWithoutFeedback>

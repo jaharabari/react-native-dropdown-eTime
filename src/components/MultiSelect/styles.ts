@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     marginBottom: 0.5,
   },
   item: {
-    padding: 17,
+    padding: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -55,6 +55,7 @@ export const styles = StyleSheet.create({
   textItem: {
     flex: 1,
     fontSize: 16,
+    color: '#191C25',
   },
   icon: {
     width: 20,

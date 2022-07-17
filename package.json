@@ -1,6 +1,6 @@
 {
   "name": "react-native-dropdown-etime",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A React Native dropdown component easy to customize for both iOS and Android.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -155,6 +155,5 @@
     ]
   },
   "dependencies": {
-    "@expo/vector-icons": "^13.0.0"
   }
 }

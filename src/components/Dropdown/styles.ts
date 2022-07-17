@@ -36,9 +36,10 @@ export const styles = StyleSheet.create({
   title: {
     marginVertical: 5,
     fontSize: 16,
+    color: '#191C25',
   },
   item: {
-    padding: 17,
+    padding: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
